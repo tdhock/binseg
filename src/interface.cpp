@@ -1,6 +1,7 @@
 /* -*- compile-command: "R CMD INSTALL .." -*- */
 
 #include "binseg_normal.h"
+#include "binseg_normal_cost.h"
 #include <R.h>//for error
 #include <R_ext/Rdynload.h>//for registering routines.
 #include <Rinternals.h>//*SXP
@@ -28,9 +29,28 @@ void binseg_normal_interface
   }
 }
   
+static int binseg_normal_cost_nargs = 4;
+static R_NativePrimitiveArgType binseg_normal_cost_types[] =
+  {REALSXP, INTSXP,
+   INTSXP, REALSXP};
+void binseg_normal_cost_interface
+(double *data_vec, int *n_data,
+   int *max_segments, double *cost){
+  int status = binseg_normal_cost
+    (data_vec, *n_data, *max_segments, cost);
+  if(status != 0){
+    error("non-zero status from binseg_normal_cost");
+  }
+}
+  
 R_CMethodDef cMethods[] = {
   {"binseg_normal_interface",
    (DL_FUNC) &binseg_normal_interface, binseg_normal_nargs, binseg_normal_types
+  },
+  {"binseg_normal_cost_interface",
+   (DL_FUNC) &binseg_normal_cost_interface,
+     binseg_normal_cost_nargs,
+     binseg_normal_cost_types
   },
   {NULL, NULL, 0, NULL}
 };

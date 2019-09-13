@@ -1,4 +1,4 @@
-/* -*- compile-command: "R CMD INSTALL .." -*- */
+/* -*- compile-command: "R CMD INSTALL .. && R --vanilla < ../tests/testthat/test_binseg_normal.R" -*- */
 
 #include "binseg_normal.h"
 #include <math.h>
@@ -66,16 +66,13 @@ public:
   std::multimap<double,int> tree;
   std::vector<Segment> seg_vec;
   double *data_vec;
-  int max_segments;
   int next_i;
-  SegVec(double *data_vec_, int max_segments_){
+  SegVec(double *data_vec_, int n_entries){
     data_vec = data_vec_;
-    max_segments = max_segments_;
-    seg_vec.resize(2*max_segments+1);
+    seg_vec.resize(n_entries);
     next_i = 0;
   }
   void add_segment(int first, int last, int invalidates_after, int invalidates_index){
-    //Rprintf("first=%d last=%d\n", first, last);
     if(next_i < seg_vec.size()){
       seg_vec[next_i].init(data_vec, first, last, invalidates_after, invalidates_index);
       if(first < last){
@@ -123,7 +120,6 @@ int binseg_normal
     invalidates_after[seg_i]=s->invalidates_after;
     before_size[seg_i]=s->best_end - s->first + 1;
     after_size[seg_i]=s->last - s->best_end;
-    //Rprintf("seg_i=%d second=%d tree_size=%d vec_size=%d next_i=%d\n", seg_i, it->second, V.tree.size(), V.seg_vec.size(), V.next_i);
     V.add_segment(s->first, s->best_end, 0, seg_i);
     V.add_segment(s->best_end+1, s->last, 1, seg_i);
     V.tree.erase(it);
