@@ -92,8 +92,11 @@ int binseg_normal
  double *before_mean, double *after_mean, 
  int *before_size, int *after_size, 
  int *invalidates_index, int *invalidates_after){
-  if(n_data < 0){
+  if(n_data < 1){
     return ERROR_NO_DATA;
+  }
+  if(max_segments < 1){
+    return ERROR_NO_SEGMENTS;
   }
   if(n_data < max_segments){
     return ERROR_TOO_MANY_SEGMENTS;

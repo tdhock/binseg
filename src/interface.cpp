@@ -24,6 +24,15 @@ void binseg_normal_interface
      before_mean, after_mean,
      before_size, after_size,
      invalidates_index, invalidates_after);
+  if(status == ERROR_NO_DATA){
+    error("no data"); 
+  }
+  if(status == ERROR_NO_SEGMENTS){
+    error("no segments"); 
+  }
+  if(status == ERROR_TOO_MANY_SEGMENTS){
+    error("too many segments"); 
+  }
   if(status != 0){
     error("non-zero status from binseg_normal");
   }
@@ -36,11 +45,8 @@ static R_NativePrimitiveArgType binseg_normal_cost_types[] =
 void binseg_normal_cost_interface
 (double *data_vec, int *n_data,
    int *max_segments, double *cost){
-  int status = binseg_normal_cost
+  binseg_normal_cost
     (data_vec, *n_data, *max_segments, cost);
-  if(status != 0){
-    error("non-zero status from binseg_normal_cost");
-  }
 }
   
 R_CMethodDef cMethods[] = {

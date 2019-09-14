@@ -2,6 +2,7 @@
 
 #define ERROR_NO_DATA 1
 #define ERROR_TOO_MANY_SEGMENTS 2
+#define ERROR_NO_SEGMENTS 3
 
 int binseg_normal
 (double *data_vec, int n_data,
