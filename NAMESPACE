@@ -1,1 +1,3 @@
 useDynLib(binseg)
+import(data.table)
+export(binseg_normal)
