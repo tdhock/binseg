@@ -1,1 +1,7 @@
 Efficient implementation of binary segmentation
+
+This package uses the =.C= interface. 
+- [[https://github.com/tdhock/binseg/blob/master/src/binseg_normal.cpp][binseg_normal]] returns everything you would need to recover model parameters (segment means).
+- [[https://github.com/tdhock/binseg/blob/master/src/binseg_normal_cost.cpp][binseg_normal_cost]] returns just the cost (faster by some small constant factors).
+See [[https://github.com/tdhock/binsegRcpp][binsegRcpp]] 
+for a more user friendly implementation of the same algorithm which also includes documentation/methods/examples/tests.
